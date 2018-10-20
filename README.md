@@ -7,7 +7,7 @@ This App displays a large timer along with exam instructions and
 conditionally timed messages (e.g. Time's Up!). It is intended to put
 on-screen during exams.
 
-![App running in Google Chrome](../public/screenshot.png)
+![App running in Google Chrome]('screenshot.png')
 
 ## Running the app
 
