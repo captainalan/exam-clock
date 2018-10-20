@@ -56,13 +56,10 @@ class ExamClock extends Component {
 
     return(
       <div> {/* Conditionally rendered announcement appear above large timer */}
-        { /* Exam hasn't yet begun */
-          (this.state.date < this.props.start_time) ? 
+        {(this.state.date < this.props.start_time) ? 
           <span style={unurgent}>Hold up! The exam hasn't started yet.</span>
-          /* Exam has started! */
           : (this.state.date < this.props.end_time) ? 
             <span style={ongoing}>Exam in progress...</span>
-            /* Exam has finished! */
             : <span style={urgent}>Time's up! Please turn in your scantron.</span>}
 
         <h2 className="timer">{this.state.date.toLocaleTimeString()}</h2>
