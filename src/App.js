@@ -49,6 +49,7 @@ class ExamClock extends Component {
   render() {
     // For displaying times
     let unurgent = {color: 'grey'};
+    let ongoing = {color: 'lime'}
     let urgent = {color: 'red'};
 
     return(
@@ -56,8 +57,8 @@ class ExamClock extends Component {
         {(this.state.date < this.props.start_time) ? 
           <span style={unurgent}>Hold up! The exam hasn't started yet.</span>
           : (this.state.date < this.props.end_time) ? 
-            <span>Exam in progress.</span>
-            : <span style={urgent}>Time's up!</span>}
+            <span style={ongoing}>Exam in progress...</span>
+            : <span style={urgent}>Time's up! Please turn in your scantron.</span>}
 
         <h2 className="timer">{this.state.date.toLocaleTimeString()}</h2>
         <div className="announcement">
@@ -65,9 +66,12 @@ class ExamClock extends Component {
           <h3>Start time: {this.props.start_time.toLocaleTimeString()}</h3>
           <h3>End time: {this.props.end_time.toLocaleTimeString()}</h3>
 
-          <p>Remember to write your name and student ID on your scantron.
-            You may keep the paper exam when you are finished.
-          </p>
+          <p>Remember to write your name and student ID on your scantron. Bubble in your <b>version number</b> as well!
+            Please take your paper exam sheet with you when you finish.</p>
+
+          <p><b>Turning in stuff at the front table:</b><br /> Version A on the LEFT, Version B on the RIGHT</p>
+          <img src="versions.png" alt="Versions A and B note"></img>
+
         </div>
       </div>
     );
