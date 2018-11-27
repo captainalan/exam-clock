@@ -1,18 +1,25 @@
+import TimePicker from 'rc-time-picker'; 
+import 'rc-time-picker/assets/index.css'; // Remember to add CSS for this!
 import React, { Component } from 'react';
 import './App.css';
 
 /* Start and End times stored in UTC in state; 
    They can be converted when they need to be displayed. */
+
+/* Time zone stuff */
+let initialStartTime = new Date();
+let initialEndTime = new Date();
+initialEndTime.setMinutes(initialEndTime.getMinutes() + 50) // 50 minute long exam
+// const offset = new Date().getTimezoneOffset();
+
 const exam_info = {
   course_name:"Underwater Basket Weaving",
   exam_name: "Midterm 1",
-  start_time:'19 Oct 2018 21:10:00 UTC',
-  end_time:'19 Oct 2018 22:00:00 UTC',
+  start_time: initialStartTime,
+  end_time: initialEndTime,
   instructions: "Remember to write your name. No cheating.",
 }
 
-/* Time zone stuff */
-const offset = new Date().getTimezoneOffset();
 
 class App extends Component {
   constructor(props){
@@ -45,8 +52,8 @@ class App extends Component {
         <h1>{this.state.exam_info.course_name}: {this.state.exam_info.exam_name} </h1>
         {/* Convert Date string in JSON object to Date object here*/}
         <ExamClock 
-          start_time = {new Date(this.state.exam_info.start_time)}
-          end_time = {new Date(this.state.exam_info.end_time)}
+          start_time = {this.state.exam_info.start_time}
+          end_time = {this.state.exam_info.end_time}
           instructions = {this.state.exam_info.instructions}
         />
       </div>
@@ -56,6 +63,8 @@ class App extends Component {
 
 class SetupBar extends Component {
   /* An unobtrusive bar to access setup/settings */
+
+  /* Use time picker component to ensure user enters valid start/stop times */
 
   /* This component has state which is 'forwarded' to the main App when the 
      submit button is pressed... */ 
@@ -69,24 +78,34 @@ class SetupBar extends Component {
 
   handleChange(event) {
     const target = event.target;
-    const value = target.value;
     const name = target.name;
-
+    const value = target.value;
+    // Probably need some error handling here
     this.setState({
       [name]: value
     });
   }
 
+  // These two should be combined into one function...
+  handleStartTimeChange(value) {
+    // Do stuff from time pickers
+  }
+  handleEndTimeChange(value) {
+    // Do stuff from time pickers
+  }
+
   handleSubmit(event) {
-    // Stuff that happens when the submit button is pressed
-    // Validate input before changing settings
-    // - Check to make sure valid dates are given
-    // Change settings via a js object
+    /* Submit Changes on Form to the Main App
+    - All dates should be valid because we use a time picker to choose them
+    */
     this.props.handleSubmit(this.state); // Pass state as parameter
 
     event.preventDefault();
   }
   render() {
+    /* Formatting for rc-time-picker */
+    const format = 'h:mm a'
+
     return(
       <div className="SetupBar">
         <button 
@@ -110,22 +129,10 @@ class SetupBar extends Component {
             /><br />
 
             <label htmlFor="exam_name">Exam name: </label>
-            <input 
-              id="exam_name" 
-              name="exam_name"
-              type="text" 
-              value={this.state.exam_name} 
-              onChange={this.handleChange}
-            /><br />
+            <TimePicker /><br />
 
             <label htmlFor="start_time">Start time: </label>
-            <input 
-              id="start_time" 
-              name="start_time"
-              type="text" 
-              value={this.state.start_time} 
-              onChange={this.handleChange}
-            /><br />
+            <TimePicker /><br />
 
             <label htmlFor="end_time">End time: </label>
             <input 
