@@ -5,15 +5,13 @@ import './App.css';
 
 import moment from 'moment';
 
-/* Start and End times stored in UTC in state; 
-   They can be converted when they need to be displayed. */
 
 /* Time zone stuff */
 let initialStartTime = new Date();
 let initialEndTime = new Date();
 initialEndTime.setMinutes(initialEndTime.getMinutes() + 50) // 50 minute long exam
-// const offset = new Date().getTimezoneOffset();
 const now = moment().second(0);
+
 
 const exam_info = {
   course_name:"Underwater Basket Weaving",
@@ -65,12 +63,10 @@ class App extends Component {
 }
 
 class SetupBar extends Component {
-  /* An unobtrusive bar to access setup/settings */
+  /* An unobtrusive bar to access setup/settings.
+    This component has state which is 'forwarded' to the main App when the 
+    submit button is pressed. */ 
 
-  /* Use time picker component to ensure user enters valid start/stop times */
-
-  /* This component has state which is 'forwarded' to the main App when the 
-     submit button is pressed... */ 
   constructor(props) {
     super(props);
     this.state = this.props.exam_info;
@@ -85,28 +81,23 @@ class SetupBar extends Component {
     const target = event.target;
     const name = target.name;
     const value = target.value;
-    // Probably need some error handling here
     this.setState({
       [name]: value
     });
   }
 
-  // These two should perhaps be combined into one function...
-  // Convert moment() to normal JS date
+  // Converting moment() to normal JS date with toDate()
   handleStartTimeChange = (value) => this.setState({ start_time: value.toDate() });
   handleEndTimeChange   = (value) => this.setState({ end_time:   value.toDate() }); 
 
   handleSubmit(event) {
-    /* Submit Changes on Form to the Main App
-    - All dates should be valid because we use a time picker to choose them
-    */
-    this.props.handleSubmit(this.state); // Pass state as parameter
-
+    /* Submit Changes on Form to the Main App */
+    this.props.handleSubmit(this.state); // Pass this component's state upwards
     event.preventDefault();
   }
   render() {
-    /* Formatting for rc-time-picker */
-    const format = 'h:mm a'
+    
+    const format = 'h:mm a' // Formatting for rc-time-picker
 
     return(
       <div className="SetupBar">
