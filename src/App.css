@@ -28,6 +28,43 @@
   }
 }
 
+.App .SetupBar {
+  color: grey;
+  font-size: 10pt;
+}
+
+.App .SetupBar button {
+  background: grey;
+  border: none;
+  color: white;
+  font-size: 16px;
+  margin: 10px;
+}
+
+.App .SetupBar .SetupForm {
+  text-align: left;
+  padding: 5px;
+}
+
+.App .SetupBar .SetupForm label {
+  display: inline-block; /* For aligning text */
+  padding: 5px;
+  vertical-align: top;
+  width: 8em;
+}
+
+.App .SetupBar .SetupForm input, textarea {
+  padding: 2px;
+  width: 30em;
+}
+.App .SetupBar .SetupForm textarea {
+  height: 8em;
+}
+
+.App .SetupBar .SetupFormHidden {
+  display: none;
+}
+
 div .announcement {
   font-family: Arial, Helvetica, sans-serif;
 }

@@ -11,9 +11,11 @@ on-screen during exams.
 
 ## Running the app
 
-After cloning the repository, run `yarn start` from the project's root
-directory. Change the JSON data at the top of `src/App.js` to match your
-course's needs.
+After cloning the repository, run `npm install` to install all required
+packages. Then, run `npm start` (or `yarn start`) from the project's root
+directory to start the App.
+
+Change the JSON data at the top of `src/App.js` to match your course's needs.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
