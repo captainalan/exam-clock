@@ -3,6 +3,8 @@ import 'rc-time-picker/assets/index.css'; // Remember to add CSS for this!
 import React, { Component } from 'react';
 import './App.css';
 
+import moment from 'moment';
+
 /* Start and End times stored in UTC in state; 
    They can be converted when they need to be displayed. */
 
@@ -11,6 +13,7 @@ let initialStartTime = new Date();
 let initialEndTime = new Date();
 initialEndTime.setMinutes(initialEndTime.getMinutes() + 50) // 50 minute long exam
 // const offset = new Date().getTimezoneOffset();
+const now = moment().second(0);
 
 const exam_info = {
   course_name:"Underwater Basket Weaving",
@@ -73,6 +76,8 @@ class SetupBar extends Component {
     this.state = this.props.exam_info;
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleStartTimeChange = this.handleStartTimeChange.bind(this);
+    this.handleEndTimeChange = this.handleEndTimeChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -86,13 +91,10 @@ class SetupBar extends Component {
     });
   }
 
-  // These two should be combined into one function...
-  handleStartTimeChange(value) {
-    // Do stuff from time pickers
-  }
-  handleEndTimeChange(value) {
-    // Do stuff from time pickers
-  }
+  // These two should perhaps be combined into one function...
+  // Convert moment() to normal JS date
+  handleStartTimeChange = (value) => this.setState({ start_time: value.toDate() });
+  handleEndTimeChange   = (value) => this.setState({ end_time:   value.toDate() }); 
 
   handleSubmit(event) {
     /* Submit Changes on Form to the Main App
@@ -129,19 +131,36 @@ class SetupBar extends Component {
             /><br />
 
             <label htmlFor="exam_name">Exam name: </label>
-            <TimePicker /><br />
+            <input 
+              id="exam_name" 
+              name="exam_name"
+              type="text" 
+              value={this.state.exam_name}
+              onChange={this.handleChange}
+            /><br /><br />
+
 
             <label htmlFor="start_time">Start time: </label>
-            <TimePicker /><br />
+            <TimePicker 
+              showSecond={true}
+              defaultValue={now}
+              className="SetupFormTime"
+              onChange={this.handleStartTimeChange}
+              format={format}
+              use12Hours
+              inputReadOnly
+            /><br />
 
             <label htmlFor="end_time">End time: </label>
-            <input 
-              id="end_time" 
-              name="end_time"
-              type="text" 
-              value={this.state.end_time} 
-              onChange={this.handleChange}
-            /><br />
+            <TimePicker 
+              showSecond={true}
+              defaultValue={now}
+              className="SetupFormTime"
+              onChange={this.handleEndTimeChange}
+              format={format}
+              use12Hours
+              inputReadOnly
+            /><br /><br />
 
             <label htmlFor="instructions">Instructions: </label>
             <textarea 
@@ -198,7 +217,7 @@ class ExamClock extends Component {
           <span style={unurgent}>Hold up! The exam has not started yet.</span>
           : (this.state.date < this.props.end_time) ? 
             <span style={ongoing}>Exam in progress...</span>
-            : <span style={urgent}>Time is up! Please turn in your scantron.</span>}
+            : <span style={urgent}>Time is up! Please turn in your exam.</span>}
 
         <h2 className="timer">{this.state.date.toLocaleTimeString()}</h2>
         <div className="announcement">

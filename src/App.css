@@ -48,15 +48,21 @@
 
 .App .SetupBar .SetupForm label {
   display: inline-block; /* For aligning text */
-  padding: 5px;
   vertical-align: top;
   width: 8em;
 }
 
 .App .SetupBar .SetupForm input, textarea {
-  padding: 2px;
-  width: 30em;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 4px 7px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  position: relative;
+  color: #666;
+  width: 400px;
 }
+
 .App .SetupBar .SetupForm textarea {
   height: 8em;
 }
