@@ -9,6 +9,9 @@ on-screen during exams.
 
 ![App running in Google Chrome](http://haksayng.com/img/github/exam-timer.png)
 
+Use the app at this project's [github.io
+website](https://captainalan.github.io/exam-clock/).
+
 ## Running the app
 
 After cloning the repository, run `npm install` to install all required
